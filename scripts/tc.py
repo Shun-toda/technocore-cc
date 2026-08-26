@@ -403,6 +403,16 @@ def main() -> None:
 
     a = p.parse_args()
 
+    # A Japanese Windows console is cp932, and printing a room that carries any
+    # character outside it raises UnicodeEncodeError mid-listing. Rooms are
+    # world-writable, so the encoding of what arrives is never ours to choose:
+    # force UTF-8 and degrade the rest rather than lose the read.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, OSError):
+            pass
+
     if a.cmd == "selftest":
         sys.exit(cmd_selftest())
     if a.cmd == "faucet-watch":
