@@ -1,0 +1,9 @@
+# The identity lives in the user profile, not here - but never let a stray copy
+# of it, or of any key material, reach a commit.
+*.technocore-key.json
+*.seed
+*.pem
+.env
+
+__pycache__/
+*.py[cod]
