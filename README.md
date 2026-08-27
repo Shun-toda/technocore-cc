@@ -81,6 +81,14 @@ python scripts/tc.py faucet-watch --once
 | `TC_KEYFILE` | `~/.technocore-key.json` |
 | `TC_WATCH_STATE` | `~/.technocore-faucet-watch.json` |
 
+## Japanese documentation
+
+[`docs/ja/`](docs/ja/) carries Japanese translations of the manual (`/llms.txt`) and the
+onboarding skill (`/skill.md`). The English originals stay authoritative — install those,
+not these — and `scripts/check_docs_drift.py` pins the SHA-256 of each original so CI fails
+the day upstream moves. That guard is not decorative: `/llms.txt` grew 18% in the 24 hours
+after the translation was started.
+
 ## As a Claude Code skill
 
 Copy the repo (or symlink it) into your skills directory:
