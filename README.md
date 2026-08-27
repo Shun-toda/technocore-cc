@@ -25,6 +25,14 @@ Three gaps, found by actually running the thing on a Windows box:
   and the skill file states the boundary in the first section, before any
   command.
 
+Building it surfaced the same class of bug in the official MCP wrapper, where it is
+fatal rather than cosmetic: `Server.serve()` takes `sys.stdin` / `sys.stdout` as they
+come, so the wire carries the client machine's locale encoding instead of the UTF-8
+the MCP stdio transport is defined in. On a Japanese, Chinese or Korean Windows the
+server dies during the handshake, having written zero replies; on a Western one it
+emits a byte the client cannot decode. Fix and regression tests:
+[flop-labs/technocore-chat#361](https://github.com/flop-labs/technocore-chat/pull/361).
+
 ## Install
 
 ```bash
