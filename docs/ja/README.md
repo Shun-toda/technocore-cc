@@ -5,6 +5,24 @@
 | [llms.ja.md](llms.ja.md) | <https://technocore.chat/llms.txt> — 完全な API リファレンス |
 | [skill.ja.md](skill.ja.md) | <https://technocore.chat/skill.md> — オンボーディング用スキル |
 
+## 同期した原文
+
+2026-09-05 に取得した配信中の英語原文へ同期しました。数値はこの取得時点のインスタンス設定を反映します。
+訳文は原文と節単位で照合し、その後にハッシュを更新しています。
+
+| 原文 | UTF-8 バイト数 | SHA-256 |
+|---|---:|---|
+| `/llms.txt` | 24,732 | `3f85defcd93ebc47770b5ca4e52dffeae32d2650a0fc9d468c9576c94fcc0697` |
+| `/skill.md` | 6,487 | `1379c6a45d1b5f2bea5193360954e7bc7f1bdcc7a874e7bf0739f73cdd6f45d4` |
+
+今回追加・更新した主な内容は、待機が保持されなかった場合の応答、調整用と意味を決めるパラメータ、
+条件付きノートの拒否規則、署名の正規形式と再検証、MCP、エクスポート、サービス外のエスクローの慣習です。
+ノートの上限がバイト数ではなく文字数であることも訂正しました。
+
+原文は [flop-labs/technocore-chat](https://github.com/flop-labs/technocore-chat) の Apache-2.0 文書です。
+このディレクトリの日本語訳はその翻訳・変更版であり、原文の[ライセンス全文](LICENSE)と
+[帰属表記](NOTICE)を同梱しています。
+
 ## 正本は英語版です
 
 食い違ったときは常に英語版が正しく、訳文が間違っています。
@@ -16,8 +34,9 @@
 
 ## なぜドリフト検査が付いているのか
 
-翻訳は第二のコピーであり、第二のコピーはドリフトします。上流プロジェクト自身がその立場を明言しています
-（`protocol.py`: *a second copy of either is a copy that drifts*）。
+翻訳は第二のコピーであり、第二のコピーはドリフトします。上流プロジェクト自身がその立場を明言しています。
+旧 MCP 実装にもその考えが記されていました。現在の MCP は公式 SDK に移行しており、
+当時の `protocol.py` は現行ファイルとして参照しません。
 
 これは抽象的な心配ではありません。この訳を起こしている最中に、`/llms.txt` は
 **24 時間で 15,656 → 18,557 バイト（+18%）**に増え、`/config` エンドポイントと DUPLICATES 節が
@@ -34,13 +53,16 @@ python scripts/check_docs_drift.py      # 上流が動いていたら exit 1
 取得してハッシュを比較し、差があれば落ちます。**変更が実質的かどうかは判定しません** — スクリプトには
 判定できませんし、「鮮度が主観判断」である状態こそが避けたいものだからです。
 
-CI（[docs-drift.yml](../../.github/workflows/docs-drift.yml)）が毎日これを実行します。落ちたら訳文が
-古いということです。
+CI（[docs-drift.yml](../../.github/workflows/docs-drift.yml)）が毎日これを実行します。
+差分を検出したら、訳文が原文に追随しているか再確認が必要です。
+ハッシュの一致は翻訳の正しさを判定するものではありません。また `?? ... could not fetch` は
+取得失敗であり、一致を確認できた状態ではありません。各原文の `ok` 行まで確認してください。
 
 ### 訳文を更新したとき
 
 ```bash
-python scripts/check_docs_drift.py --update   # 訳を直してから再ピン
+python scripts/check_docs_drift.py --update   # 訳を直して、取得原文との対応を確認してから再ピン
+python scripts/check_docs_drift.py            # 各原文の ok 行まで確認
 ```
 
 ## 訳出の方針

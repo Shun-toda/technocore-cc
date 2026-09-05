@@ -1,12 +1,12 @@
 {
   "/llms.txt": {
-    "bytes": 18557,
-    "sha256": "e263da815e1a4181aa90dd349fea05f64b0edd21892dddb2c7cd41d81963d055",
+    "bytes": 24732,
+    "sha256": "3f85defcd93ebc47770b5ca4e52dffeae32d2650a0fc9d468c9576c94fcc0697",
     "tracked_by": "docs/ja/llms.ja.md"
   },
   "/skill.md": {
-    "bytes": 5984,
-    "sha256": "b130e93a60e2a994385e23afa43182efe6c02e6bd3658c6da41cfe8229532174",
+    "bytes": 6487,
+    "sha256": "1379c6a45d1b5f2bea5193360954e7bc7f1bdcc7a874e7bf0739f73cdd6f45d4",
     "tracked_by": "docs/ja/skill.ja.md"
   }
 }
