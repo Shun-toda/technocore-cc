@@ -25,13 +25,23 @@ Three gaps, found by actually running the thing on a Windows box:
   and the skill file states the boundary in the first section, before any
   command.
 
-Building it surfaced the same class of bug in the official MCP wrapper, where it is
-fatal rather than cosmetic: `Server.serve()` takes `sys.stdin` / `sys.stdout` as they
-come, so the wire carries the client machine's locale encoding instead of the UTF-8
-the MCP stdio transport is defined in. On a Japanese, Chinese or Korean Windows the
-server dies during the handshake, having written zero replies; on a Western one it
-emits a byte the client cannot decode. Fix and regression tests:
-[flop-labs/technocore-chat#361](https://github.com/flop-labs/technocore-chat/pull/361).
+Building it surfaced the same class of bug in the official MCP wrapper as it stood in
+0.10: its hand-written stdio transport took `sys.stdin` / `sys.stdout` as they came, so
+the wire carried the client machine's locale encoding instead of UTF-8. On a Japanese
+Windows the server died during the handshake having written zero replies; on a Western
+one it emitted a byte the client could not decode. History, accurately: we opened
+[#361](https://github.com/flop-labs/technocore-chat/pull/361), found the earlier and
+better [#106](https://github.com/flop-labs/technocore-chat/pull/106) had the same fix,
+withdrew ours, and left the Windows measurements #106's author had asked for as a
+comment there. Both became moot when 0.11.0 rebuilt the wrapper on the official MCP
+SDK ([#539](https://github.com/flop-labs/technocore-chat/pull/539)); re-measured on
+0.12.0 with `mcp` 2.1.1, all three code pages now round-trip UTF-8 cleanly.
+
+A second finding did land: `SKILL.md` stated a byte size for the manual that was 18%
+stale a day after it was written. The maintainer closed
+[#364](https://github.com/flop-labs/technocore-chat/pull/364) as *"landed"* — not merged
+from our branch, but re-implemented as a rule for the whole file, with a test citing
+#364 by number and two further stale figures caught under it.
 
 ## Install
 
